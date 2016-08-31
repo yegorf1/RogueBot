@@ -279,7 +279,8 @@ class User(object):
 	def get_fight_actions(self):
 		actions = [
 			KICK_ARM,
-			KICK_MAGIC#, USE + 'Воображение'
+			KICK_MAGIC,
+			USE + 'Воображение'
 		]
 
 		for i in self.get_items():
@@ -293,11 +294,13 @@ class User(object):
 	def fight_dice(self, reply, result, subject=None):
 		room = roomloader.load_room(self.room[1], self.room[0])
 		if subject == 'noname':
-			dmg = result + self.get_damage_bonus(reply)
+			dmg = result + self.get_damage_bonus(reply) // 2
 
 			reply('Твоя непонятная штука нанесла урон, равный *{0}*'.format(dmg))
 
 			room.make_damage(self, reply, dmg)
+
+			self.fight_answer(reply)
 
 
 	def fight_action(self, reply, text):
@@ -311,7 +314,7 @@ class User(object):
 		elif text == KICK_MAGIC:
 			dmg = self.get_mana_damage()
 
-			reply('Ахалай махалай!\nИз неоткуда появляется кулак и наносит *{0}* урона'.format(dmg))
+			reply('Ахалай махалай!\nИз ниоткуда появляется кулак и наносит *{0}* урона'.format(dmg))
 
 			room.make_damage(self, reply, dmg)
 		elif text.startswith(USE):
@@ -326,6 +329,9 @@ class User(object):
 			if item:
 				dmg = item.fight_use(self, reply, room) + self.get_damage_bonus(reply)
 
+				if item.disposable:
+					self.remove_item(item.code_name)
+
 				if self.state == 'room':
 					reply('{0} путем нехитрых махинаций наносит урон, равный *{1}*'.format(name, dmg))
 
@@ -338,11 +344,16 @@ class User(object):
 			reply('Не понял тебя')
 
 		if self.state == 'room':
-			a, b = room.damage_range
-			dmg = self.make_damage(a, b, reply)
+			self.fight_answer(reply)
 
-			if not self.dead:
-				reply('В ответ ты отхватил *{0}* урона'.format(dmg))
+	def fight_answer(self, reply):
+		room = roomloader.load_room(self.room[1], self.room[0])
+
+		a, b = room.damage_range
+		dmg = self.make_damage(a, b, reply)
+
+		if not self.dead:
+			reply('В ответ ты отхватил *{0}* урона'.format(dmg))
 
 	def won(self, reply):
 		room = roomloader.load_room(self.room[1], self.room[0])
@@ -629,7 +640,7 @@ class User(object):
 			self.visited_shop = True
 			self.open_corridor(reply)
 		else:
-			reply('Нет денег — нет товара!')
+			reply('Нет денег — нет товара!', self.shop_names)
 
 
 	def shop(self, reply, text):
@@ -644,7 +655,7 @@ class User(object):
 					self.buy(item, reply)
 					return
 
-			reply('У меня такого нет')
+			reply('У меня такого нет', self.shop_names)
 
 	def open_inventory(self, reply):
 		self.state = 'inventory'
@@ -702,6 +713,11 @@ class User(object):
 			for i in items:
 				if i.name == text:
 					i.on_use(self, reply)
+
+					if i.disposable:
+						self.remove_item(i.code_name)
+
+					break
 			
 			if self.state == 'inventory':
 				self.open_corridor(reply)
