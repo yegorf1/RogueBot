@@ -9,8 +9,7 @@ damage_range = (6, 12)
 
 coins = random.randrange(15, 30, 1)
 
-loot = []
-# loot = [''] Чертеж летучего корабля
+loot = ['drawing_flying_ship'] # Чертеж летучего корабля
 
 
 def enter(user, reply):

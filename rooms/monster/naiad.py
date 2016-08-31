@@ -9,8 +9,7 @@ damage_range = (3, 7)
 
 coins = random.randrange(7, 9, 1)
 
-loot = []
-# loot = [''] Слезы Наяды
+loot = ['tears_naiad']  # Слезы Наяды
 
 
 def enter(user, reply):

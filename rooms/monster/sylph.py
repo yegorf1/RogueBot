@@ -9,8 +9,7 @@ damage_range = (7, 14)
 
 coins = random.randrange(12, 18, 2)
 
-loot = []
-# loot = [''] Балетная пачка
+loot = ['ballet_tutu']  # Балетная пачка
 
 
 def enter(user, reply):

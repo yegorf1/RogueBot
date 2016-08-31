@@ -9,8 +9,7 @@ damage_range = (20, 25)
 
 coins = random.randrange(40, 90, 10)
 
-loot = []
-# loot = [''] Каменное сердце
+loot = ['stone_heart']  # Каменное сердце
 
 
 def enter(user, reply):

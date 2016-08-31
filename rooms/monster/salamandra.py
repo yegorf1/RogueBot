@@ -9,8 +9,7 @@ damage_range = (10, 12)
 
 coins = random.randrange(3, 9, 1)
 
-loot = []
-# loot = [''] Хвост саламандры
+loot = ['tail_salamander']  # Хвост саламандры
 
 
 def enter(user, reply):

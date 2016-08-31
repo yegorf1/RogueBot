@@ -9,8 +9,7 @@ damage_range = (0, 2)
 
 coins = random.randrange(0, 5, 1)
 
-loot = []
-# loot = [''] Вставная челюсть
+loot = ['dentures']  # Вставная челюсть
 
 
 def enter(user, reply):

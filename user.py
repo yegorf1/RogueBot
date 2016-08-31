@@ -299,7 +299,6 @@ class User(object):
 
 			room.make_damage(self, reply, dmg)
 
-
 	def fight_action(self, reply, text):
 		room = roomloader.load_room(self.room[1], self.room[0])
 		if text == KICK_ARM:
@@ -420,7 +419,6 @@ class User(object):
 			res += i.get_dice_bonus(self, reply)
 
 		return res
-
 
 	def dice(self, reply, text):
 		if text == 'Кинуть':
@@ -550,7 +548,6 @@ class User(object):
 			self.prayed = True
 			self.open_corridor(reply)
 
-
 	def pray(self, reply, god=None):
 		self.state = 'pray'
 
@@ -567,7 +564,6 @@ class User(object):
 
 			self.prayto(reply, god)
 			self.last_god = god
-
 
 	def open_shop(self, reply):
 		self.state = 'shop'
@@ -630,7 +626,6 @@ class User(object):
 			self.open_corridor(reply)
 		else:
 			reply('Нет денег — нет товара!')
-
 
 	def shop(self, reply, text):
 		if text == 'Выход':
@@ -737,7 +732,6 @@ class User(object):
 		elif text.startswith('Узнать'):
 			self.show_characteristics(reply)
 
-
 	def first(self, reply, text):
 		txt = (''
 			'Ты начинаешь сложный путь, а я твой рассказчик. Сейчас ты стоишь '
@@ -788,4 +782,3 @@ class User(object):
 			self.dice(reply, text)
 		elif self.state == 'reborned':
 			reply(self.reborn_answer, [ '/start' ])
-			

@@ -9,8 +9,7 @@ damage_range = (10, 12)
 
 coins = random.randrange(0, 75, 5)
 
-loot = []
-# loot = ['ritual_dagger'] Ритуальный кинжал
+loot = ['ring']  # Кольцо
 
 
 def enter(user, reply):

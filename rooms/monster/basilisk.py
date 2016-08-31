@@ -10,7 +10,7 @@ damage_range = (17, 20)
 coins = random.randrange(14, 21, 1)
 
 loot = []
-# loot = [''] Зуб Василиска
+loot = ['tooth_basilisk']  # Зуб Василиска
 
 
 def enter(user, reply):
