@@ -1,7 +1,10 @@
+from constants import *
+
 name = 'Дракон'
 
 hp = 100
-damage_range =  ( 15, 30 )
+element = NONE
+damage_range = ( 15, 30 )
 
 coins = 300
 

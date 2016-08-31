@@ -1,6 +1,9 @@
+from constants import *
+
 name = 'Архимаг из прошлых эпох'
 
 hp = 50
+element = NONE
 damage_range =  ( 15, 20 )
 
 coins = 3

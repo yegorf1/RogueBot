@@ -8,7 +8,9 @@ from constants import *
 
 logger = logging.getLogger('rg')
 
+
 def load_room(name, room_type='usual', user=None):
+	# Загрузка комнаты
 	path = 'rooms/{0}/{1}.py'.format(room_type, name)
 
 	if not os.path.exists(path):
@@ -23,6 +25,7 @@ def load_room(name, room_type='usual', user=None):
 	room = room_loader.load_module(name)
 
 	return check_room(room, name, room_type)
+
 
 def check_room(room, name, room_type):
 	room.code_name = name
@@ -46,6 +49,7 @@ def check_room(room, name, room_type):
 			user.fight_action(reply, text)
 
 		def make_damage(user, reply, dmg):
+			# Получить урон
 			hp = user.get_room_temp('hp', 0)
 			hp -= dmg
 
@@ -87,6 +91,7 @@ def check_room(room, name, room_type):
 
 	return room
 
+
 def get_next_room():
 	p = random.random()
 
@@ -94,6 +99,7 @@ def get_next_room():
 		return get_random_room('monster')
 	else:
 		return get_random_room('usual')
+
 
 def get_random_room(room_type='usual'):
 	pth = 'rooms/' + room_type + '/'
