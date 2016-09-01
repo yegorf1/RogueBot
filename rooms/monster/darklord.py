@@ -1,5 +1,4 @@
 from constants import *
-from random import randrange
 
 FIGHT = 'За Шир!!!'
 ESCAPE = 'Попытаться убежать'
@@ -8,7 +7,7 @@ name = 'Темный лорд'
 hp = 1000  # Темный Лорд должен быть лютым парнем! А то что-то они там все перекаченные какие-то
 damage_range = ( 20, 25 )
 
-coins = randrange(200, 400, 10)
+coins = 0  # Темному Лорду не нужны деньги! Он берет все что захочет!
 
 loot = [ 'ring' ]
 
@@ -56,15 +55,19 @@ def dice(user, reply, result, subject=None):
 
 		else:
 			reply('Не вышло!\nНу ни чего я буду за тебя болеть!')
-			# тут нужно запустить обычый обой
+			# тут нужно запустить обычый бой
 
 
 def action(user, reply, text):
 	question = user.get_room_temp('question')
 
 	if text == FIGHT:
-		# Тут нужно запустить обычный бой с монстром
-		pass
+		reply(
+			'Пойду ка я спрячусь вон за ту колонну! '
+			'А вы тут пока общайтесь!'
+		)
+		# тут нужно запустить обычый бой
+
 
 	elif text == ESCAPE:
 		reply(
