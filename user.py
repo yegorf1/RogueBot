@@ -13,6 +13,7 @@ from collections import Counter
 
 logger = logging.getLogger('rg')
 
+
 class User(object):
 	def __init__(self, uid):
 		super(User, self).__init__()
@@ -29,11 +30,11 @@ class User(object):
 
 		self.state = 'name'
 
-		self.items = [ ]
+		self.items = []
 		self.inventory_page = 0
 
-		self.gods = [ BUDDHA, JESUS, ALLAH, AUTHOR ]
-		self.gods_level = [ 0 for g in self.gods ]
+		self.gods = [BUDDHA, JESUS, ALLAH, AUTHOR]
+		self.gods_level = [0 for g in self.gods]
 		self.last_god = ''
 		self.prayed = False
 
@@ -44,13 +45,13 @@ class User(object):
 		self.intelligence = 0
 
 		self.visited_shop = False
-		self.shop_items = [ ]
-		self.shop_names = [ ]
+		self.shop_items = []
+		self.shop_names = []
 
-		self.tags = [ ]
+		self.tags = []
 
 		self.room = ('', '')
-		self.room_temp = { }
+		self.room_temp = {}
 
 		self.reborn_answer = None
 		self.dead = False
@@ -58,8 +59,6 @@ class User(object):
 		self.rooms_to_story = random.randint(5, 25)
 		self.next_story_room = 'first'
 		self.story_level = 0
-
-		self.darklord_level = 0  # Для доступа к темному лорду
 
 		self.subject = None
 
@@ -99,7 +98,7 @@ class User(object):
 		return msg
 
 	def get_items(self):
-		return [ i for i in [ itemloader.load_item(i[1], i[0]) for i in self.items ] if i is not None ]
+		return [i for i in [itemloader.load_item(i[1], i[0]) for i in self.items] if i is not None]
 
 	def get_damage(self):
 		res = 0
@@ -166,7 +165,7 @@ class User(object):
 	def remove_items_with_tag(self, tag):
 		items = self.get_items()
 
-		new_items = [ (i.buff, i.code_name) for i in items if tag not in i.tags ]
+		new_items = [(i.buff, i.code_name) for i in items if tag not in i.tags]
 
 		self.items = new_items
 
@@ -185,7 +184,7 @@ class User(object):
 		return False
 
 	def paid(self, costs):
-		if self.gold >= costs:
+		if self.gold >= costs and costs >= 0:
 			self.gold -= costs
 
 			return True
@@ -198,13 +197,13 @@ class User(object):
 	def name_confirm(self, reply, text):
 		if len(text) == 7:
 			txt = ('Твоя взяла. Отныне и навсегда (Нет) '
-					'тебя будут звать «{0}». Поменять имя '
-					'можно с помощью /setname').format(self.name)
+				   'тебя будут звать «{0}». Поменять имя '
+				   'можно с помощью /setname').format(self.name)
 			self.state = 'first_msg'
 
 			logger.info('New user with id {0}'.format(self.uid))
 
-			reply(txt, [ 'А что дальше?' ])
+			reply(txt, ['А что дальше?'])
 		else:
 			self.state = 'name'
 			reply('Ну и как же тебя звать на этот раз?')
@@ -216,13 +215,13 @@ class User(object):
 		else:
 			n = name
 			while n == name:
-				n = random.choice (names)
+				n = random.choice(names)
 
 			msg = ('Ты знаешь, у меня есть знакомый по имени {0}, и '
-					'я считаю, что это звучит лучше {1}\n'
-					'Ты уверен?').format(n, name)
+				   'я считаю, что это звучит лучше {1}\n'
+				   'Ты уверен?').format(n, name)
 
-			buttons = [ 'Уверен.', 'Дай-ка я поменяю.' ]
+			buttons = ['Уверен.', 'Дай-ка я поменяю.']
 
 			self.state = 'name_confirm'
 			self.name = name
@@ -246,7 +245,7 @@ class User(object):
 		self.dead = True
 		self.state = ''
 
-		reply('Батенькаъ, да вы умерли! Все начинай с начала', [ '/start' ], photo='death.png')
+		reply('Батенькаъ, да вы умерли! Все начинай с начала', ['/start'])
 
 	def open_corridor(self, reply):
 		if self.state == 'room':
@@ -256,7 +255,7 @@ class User(object):
 		self.state = 'corridor'
 		reply(self.get_stats())
 
-		buttons = [ 'Открыть очередную дверь', 'Узнать характеристики героя' ]
+		buttons = ['Открыть очередную дверь', 'Узнать характеристики героя']
 
 		if not self.prayed:
 			buttons.append('Молить Бога о выходе')
@@ -303,7 +302,6 @@ class User(object):
 			room.make_damage(self, reply, dmg)
 
 			self.fight_answer(reply)
-
 
 	def fight_action(self, reply, text):
 		room = roomloader.load_room(self.room[1], self.room[0])
@@ -360,8 +358,8 @@ class User(object):
 	def won(self, reply):
 		room = roomloader.load_room(self.room[1], self.room[0])
 
-		items = [ itemloader.load_item(i, 'loot') for i in room.loot ]
-		loot = ', '.join([ item.name for item in items ]) if len(items) > 0 else 'Ничего.'
+		items = [itemloader.load_item(i, 'loot') for i in room.loot]
+		loot = ', '.join([item.name for item in items]) if len(items) > 0 else 'Ничего.'
 
 		for lt in room.loot:
 			self.add_item('loot', lt)
@@ -386,7 +384,7 @@ class User(object):
 				room_type, room_name = roomloader.get_next_room()
 
 		self.room = (room_type, room_name)
-		self.room_temp = { }
+		self.room_temp = {}
 
 		room = roomloader.load_room(self.room[1], self.room[0])
 
@@ -434,7 +432,6 @@ class User(object):
 
 		return res
 
-
 	def dice(self, reply, text):
 		if text == 'Кинуть':
 			self.state = 'room'
@@ -469,7 +466,7 @@ class User(object):
 			self.leave(reply)
 
 	def add_item(self, buff, name):
-		self.items.append( (buff, name) )
+		self.items.append((buff, name))
 
 	def add_tag(self, tag):
 		self.tags.append(tag)
@@ -478,7 +475,7 @@ class User(object):
 		if tag in self.tags:
 			return True
 
-		#for i in self.get_items():
+		# for i in self.get_items():
 		#	if tag in i.tags:
 		#		return True
 
@@ -492,23 +489,23 @@ class User(object):
 		return False
 
 	def evilgod(self, reply, god):
-		self.gods_level = [ 0 for g in self.gods ]
+		self.gods_level = [0 for g in self.gods]
 
-		if god == self.gods[0]: # Buddha
+		if god == self.gods[0]:  # Buddha
 			txt = ('Тебе повезло, что Буддисты полны спокойствия и не злятся, '
-					'когда кто-то меняет Веру. Им вообще пофиг. На _все_.')
+				   'когда кто-то меняет Веру. Им вообще пофиг. На _все_.')
 			reply(txt)
-		elif god == self.gods[1]: # Jesus
+		elif god == self.gods[1]:  # Jesus
 			txt = ('Иисус разгневался и убил всех твоих египтских детей. '
-					'Правда у тебя их не было, но это событие так растрогало '
-					'тебя, что ты потерял частичку себя.')
+				   'Правда у тебя их не было, но это событие так растрогало '
+				   'тебя, что ты потерял частичку себя.')
 			self.make_damage(5, 10, reply, death=False)
 			reply(txt)
-		elif god == self.gods[2]: # Allah
+		elif god == self.gods[2]:  # Allah
 			txt = ('Аллах не терпит ошибок и он очень зол.')
 			self.make_damage(20, 30, reply)
 			reply(txt)
-		elif god == self.gods[3]: # Author
+		elif god == self.gods[3]:  # Author
 			txt = ('Ты же понимаешь, что я тут заправляю? Раз такой умный, держи новенькие ботиночки')
 
 			self.add_item('special', 'intoxicated_shoes')
@@ -516,16 +513,16 @@ class User(object):
 			reply(txt)
 
 	def god_love(self, reply, god):
-		if god == BUDDHA_NUM: # Buddha
+		if god == BUDDHA_NUM:  # Buddha
 			reply('Ты обрел частичку Нирваны, парень.')
 			self.mp = self.max_mp
-		elif god == JESUS_NUM: # Jesus
+		elif god == JESUS_NUM:  # Jesus
 			reply('Твой рюкзак потяжелел.. Хм.. Странно')
 			self.items.append(('special', 'wine'))
-		elif god == ALLAH_NUM: # Allah
+		elif god == ALLAH_NUM:  # Allah
 			reply('Ты чувствуешь как силы приходят к тебе!')
 			self.hp = self.max_hp
-		elif god == AUTHOR_NUM: # Author
+		elif god == AUTHOR_NUM:  # Author
 			reply('За это я подскажу тебе одну интересную комнату')
 
 			self.open_room(reply, 'special', 'icecream')
@@ -533,16 +530,16 @@ class User(object):
 	def prayto(self, reply, god):
 		god_num = -1
 
-		if god == self.gods[BUDDHA_NUM]: # Buddha
+		if god == self.gods[BUDDHA_NUM]:  # Buddha
 			reply('Не хочу тебя расстраивать, но буддисты не молятся')
 			god_num = BUDDHA_NUM
-		elif god == self.gods[JESUS_NUM]: # Jesus
+		elif god == self.gods[JESUS_NUM]:  # Jesus
 			reply('Продолжай в том же духе и мы сможем пройти по воде')
 			god_num = JESUS_NUM
-		elif god == self.gods[ALLAH_NUM]: # Allah
+		elif god == self.gods[ALLAH_NUM]:  # Allah
 			reply('Аллах не терпит ошибок.')
 			god_num = ALLAH_NUM
-		elif god == self.gods[AUTHOR_NUM]: # Author
+		elif god == self.gods[AUTHOR_NUM]:  # Author
 			reply('Ох как приятно. Спасибо тебе')
 			god_num = AUTHOR_NUM
 		else:
@@ -554,15 +551,12 @@ class User(object):
 			for item in self.get_items():
 				item.on_pray(self, reply, god)
 
-
 			if self.gods_level[god_num] >= GOD_LEVEL:
 				self.god_love(reply, god_num)
-
 
 		if self.state == 'pray':
 			self.prayed = True
 			self.open_corridor(reply)
-
 
 	def pray(self, reply, god=None):
 		self.state = 'pray'
@@ -581,7 +575,6 @@ class User(object):
 			self.prayto(reply, god)
 			self.last_god = god
 
-
 	def open_shop(self, reply):
 		self.state = 'shop'
 
@@ -591,8 +584,8 @@ class User(object):
 
 		self.shop_items = itemloader.load_shop_items()
 
-		items =  [ itemloader.load_item(i[1], i[0]) for i in self.shop_items ]
-		self.shop_names = [ i.name for i in items ]
+		items = [itemloader.load_item(i[1], i[0]) for i in self.shop_items]
+		self.shop_names = [i.name for i in items]
 		self.shop_names.append('Выход')
 
 		for item in self.get_items():
@@ -620,20 +613,20 @@ class User(object):
 			else:
 				reply('Забирай скорей')
 
-			check = ( '```text'
-				'              ФИКСАЛЬНЫЙ ЧЕК              \n'
-				'         ООО "Магазин подземелья"         \n'
-				'             ДОБРО ПОЖАЛОВАТЬ!            \n'
-				'Покупка: {0}\n'
-				'Кассир: №1\n\n'
-				'------------------------------------------\n\n'
-				'ПРОДАЖА\n'
-				'  {1} 1 шт. — {2}.00 злт\n'
-				'\n'
-				'ИТОГО — {2}.00 злт\n'
-				'\nСпасибо за покупку!\n'
-				'```'
-			).format(strftime("%Y-%m-%d %H:%M:%S UTC", gmtime()), item.name, item.price,)
+			check = ('```text'
+					 '              ФИКСАЛЬНЫЙ ЧЕК              \n'
+					 '         ООО "Магазин подземелья"         \n'
+					 '             ДОБРО ПОЖАЛОВАТЬ!            \n'
+					 'Покупка: {0}\n'
+					 'Кассир: №1\n\n'
+					 '------------------------------------------\n\n'
+					 'ПРОДАЖА\n'
+					 '  {1} 1 шт. — {2}.00 злт\n'
+					 '\n'
+					 'ИТОГО — {2}.00 злт\n'
+					 '\nСпасибо за покупку!\n'
+					 '```'
+					 ).format(strftime("%Y-%m-%d %H:%M:%S UTC", gmtime()), item.name, item.price, )
 
 			self.items.append((item.buff, item.code_name))
 			item.on_buy(self, reply)
@@ -643,7 +636,6 @@ class User(object):
 			self.open_corridor(reply)
 		else:
 			reply('Нет денег — нет товара!', self.shop_names)
-
 
 	def shop(self, reply, text):
 		if text == 'Выход':
@@ -668,7 +660,7 @@ class User(object):
 			self.open_corridor(reply)
 			return
 
-		actions = [ ]
+		actions = []
 		msg = 'В инвентаре ты нашел:\n'
 
 		counter_items = Counter(items)
@@ -754,26 +746,26 @@ class User(object):
 			self.open_inventory(reply)
 		elif text.startswith('Узнать'):
 			self.show_characteristics(reply)
-
+		else:
+			self.open_corridor(reply)
 
 	def first(self, reply, text):
 		txt = (''
-			'Ты начинаешь сложный путь, а я твой рассказчик. Сейчас ты стоишь '
-			'посреди коридора - центр нашей с тобой игры. В нем множество '
-			'разных дверей, и каждый ход ты будешь открывать одну из них. Есть '
-			'ли выход из этого ада я, честно говоря, не знаю, но мы можем '
-			'проверить.\n\n'
-			'Будь осторожен, за дверью может оказать подземелье с драконом, '
-			'хотя с такой же вероятностью и озеро мороженого.\n\n'
-			'Держи игральные кости, их нужно будет кидать каждое действие, '
-			'требущее удачи и мастерства. При хорошем броске монстр падет. '
-			'А при неудаче.. Ну.. можно рассмешить твоих противников, и они '
-			'сжалятся над тобой.\n\n'
-			'Еще у нас есть место для мольбы. Если помолиться несколько раз '
-			'одному Богу, то можно получить что-то хорошее. В этом деле '
-			'главное не смешивать.'
-		)
-
+			   'Ты начинаешь сложный путь, а я твой рассказчик. Сейчас ты стоишь '
+			   'посреди коридора - центр нашей с тобой игры. В нем множество '
+			   'разных дверей, и каждый ход ты будешь открывать одну из них. Есть '
+			   'ли выход из этого ада я, честно говоря, не знаю, но мы можем '
+			   'проверить.\n\n'
+			   'Будь осторожен, за дверью может оказать подземелье с драконом, '
+			   'хотя с такой же вероятностью и озеро мороженого.\n\n'
+			   'Держи игральные кости, их нужно будет кидать каждое действие, '
+			   'требущее удачи и мастерства. При хорошем броске монстр падет. '
+			   'А при неудаче.. Ну.. можно рассмешить твоих противников, и они '
+			   'сжалятся над тобой.\n\n'
+			   'Еще у нас есть место для мольбы. Если помолиться несколько раз '
+			   'одному Богу, то можно получить что-то хорошее. В этом деле '
+			   'главное не смешивать.'
+			   )
 
 		reply(txt)
 
@@ -785,7 +777,7 @@ class User(object):
 
 	def message(self, reply, text):
 		if self.dead:
-			reply('Батенькаъ, вы очень умерли', [ '/start' ])
+			reply('Батенькаъ, вы очень умерли', ['/start'])
 		elif self.state == 'name':
 			self.name_given(reply, text)
 		elif self.state == 'name_confirm':
@@ -805,5 +797,5 @@ class User(object):
 		elif self.state == 'dice':
 			self.dice(reply, text)
 		elif self.state == 'reborned':
-			reply(self.reborn_answer, [ '/start' ])
+			reply(self.reborn_answer, ['/start'])
 
