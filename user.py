@@ -8,6 +8,7 @@ import rooms.roomloader as roomloader
 import logging
 from constants import *
 from utils.names import names
+from utils.story import *
 
 from collections import Counter
 
@@ -243,6 +244,7 @@ class User(object):
 	def death(self, reply):
 		self.dead = True
 		self.state = ''
+		clear_story()
 
 		reply('Батенькаъ, да вы умерли! Все начинай с начала', [ '/start' ])
 
