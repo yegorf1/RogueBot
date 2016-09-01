@@ -59,6 +59,8 @@ class User(object):
 		self.next_story_room = 'first'
 		self.story_level = 0
 
+		self.darklord_level = 0  # Для доступа к темному лорду
+
 		self.subject = None
 
 	def debug_info(self):
@@ -145,7 +147,7 @@ class User(object):
 		for i in self.get_items():
 			if i.aura == aura:
 				return True
-				
+
 		return False
 
 	def get_stats(self):
@@ -221,7 +223,7 @@ class User(object):
 					'Ты уверен?').format(n, name)
 
 			buttons = [ 'Уверен.', 'Дай-ка я поменяю.' ]
-				
+
 			self.state = 'name_confirm'
 			self.name = name
 
@@ -440,7 +442,7 @@ class User(object):
 			res = random.randint(1, DICE_MAX)
 			res += self.get_dice_bonus(reply)
 			reply('Твой результат *{0}*'.format(res))
-			
+
 			room = roomloader.load_room(self.room[1], self.room[0])
 			room.dice(self, reply, res, self.subject)
 
@@ -465,7 +467,7 @@ class User(object):
 
 		if success:
 			self.leave(reply)
-			
+
 	def add_item(self, buff, name):
 		self.items.append( (buff, name) )
 
@@ -510,7 +512,7 @@ class User(object):
 			txt = ('Ты же понимаешь, что я тут заправляю? Раз такой умный, держи новенькие ботиночки')
 
 			self.add_item('special', 'intoxicated_shoes')
-			
+
 			reply(txt)
 
 	def god_love(self, reply, god):
@@ -525,7 +527,7 @@ class User(object):
 			self.hp = self.max_hp
 		elif god == AUTHOR_NUM: # Author
 			reply('За это я подскажу тебе одну интересную комнату')
-			
+
 			self.open_room(reply, 'special', 'icecream')
 
 	def prayto(self, reply, god):
@@ -541,7 +543,7 @@ class User(object):
 			reply('Аллах не терпит ошибок.')
 			god_num = ALLAH_NUM
 		elif god == self.gods[AUTHOR_NUM]: # Author
-			reply('Ох как приятно. Спасибо тебе')	
+			reply('Ох как приятно. Спасибо тебе')
 			god_num = AUTHOR_NUM
 		else:
 			reply('Таких не молим.')
@@ -602,7 +604,7 @@ class User(object):
 			'{3}\nЦена: {4}\n{5}\n\n'
 			'{6}\nЦена: {7}\n{8}'
 		).format(
-			items[0].name, items[0].price, items[0].description, 
+			items[0].name, items[0].price, items[0].description,
 			items[1].name, items[1].price, items[1].description,
 			items[2].name, items[2].price, items[2].description
 		)
@@ -709,7 +711,7 @@ class User(object):
 			self.open_inventory(reply)
 		else:
 			items = self.get_items()
-			
+
 			for i in items:
 				if i.name == text:
 					i.on_use(self, reply)
@@ -718,7 +720,7 @@ class User(object):
 						self.remove_item(i.code_name)
 
 					break
-			
+
 			if self.state == 'inventory':
 				self.open_corridor(reply)
 
@@ -730,8 +732,8 @@ class User(object):
 			'Интеллект: _{3}_\n'
 			'Магический урон: _{4}_'
 		).format(
-			self.get_damage(), 
-			self.get_defence(), 
+			self.get_damage(),
+			self.get_defence(),
 			self.get_charisma(),
 			self.get_mana_damage(),
 			self.get_intelligence()
@@ -804,4 +806,4 @@ class User(object):
 			self.dice(reply, text)
 		elif self.state == 'reborned':
 			reply(self.reborn_answer, [ '/start' ])
-			
+
