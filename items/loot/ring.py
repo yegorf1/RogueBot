@@ -7,6 +7,7 @@ description = (
 )
 
 price = 0
+tag = [ 'ring' ]
 iscursed = True
 
 
