@@ -1,5 +1,8 @@
+from constants import *
 from random import randrange
 
+FIGHT = 'За Шир!!!'
+ESCAPE = 'Попытаться убежать'
 
 name = 'Темный лорд'
 hp = 1000  # Темный Лорд должен быть лютым парнем! А то что-то они там все перекаченные какие-то
@@ -35,7 +38,42 @@ def enter(user, reply):
 		else:
 			user.remove_item('rigs')  # У игрока должно быть только одно кольцо!
 			reply(
-				'«_Я чувстую его! Оно мое!_»'
-				'Мамочки! Мне страшно!'
+				'«_Я чувстую его! Оно мое!_»\n'
+				'Мамочки! Мне страшно!\n'
 				'Верни ему то что он просит! НЕМЕДЛЕННО!'
 			)
+
+		user.user.set_room_temp('question')
+
+
+def dice(user, reply, result, subject=None):
+
+	if subject == ESCAPE:
+
+		if result > (DICE_MAX / 3) * 2:
+			reply('Тебе удалось! Надеюсь мы больше не встретим этого мерзкого типа!')
+			user.leave(reply)
+
+		else:
+			reply('ОЙ! Как смешно лопнула твоя голова!')
+			user.death(reply)
+
+
+def action(user, reply, text):
+	question = user.get_room_temp('question')
+
+	if text == FIGHT:
+		# Тут нужно запустить обычный бой с монстром
+		pass
+
+	elif text == ESCAPE:
+		reply(
+			'«_Апчих! Пора тут прибарться_»\n'
+			'Кидай кубики, это наш шанс!!!'
+		)
+		user.throw_dice(reply, ESCAPE)
+
+
+def get_actions(user):
+	question = user.get_room_temp('question')
+	return [FIGHT, ESCAPE]
