@@ -23,7 +23,7 @@ def action(user, reply, text):
 			'...\n'
 			'...\n'
 			'...\n'
-			'Понимаешь крышку\n'
+			'Поднять крышку\n'
 		)
 
 		if random.random > 0.5:

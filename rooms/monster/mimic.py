@@ -28,3 +28,9 @@ def action(user, reply, text):
 			'...\n'
 			'_МИМИК_\n'
 		)
+
+		user.fight_action(reply, text)
+
+	else:
+
+		user.leave(reply)
