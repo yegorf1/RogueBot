@@ -7,7 +7,7 @@ def get_actions(user):
 		actions.append(str(g))
 		g += 50
 
-	return actions
+	return actions[:10]
 
 
 def enter(user, reply):
