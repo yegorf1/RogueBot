@@ -17,9 +17,9 @@ def enter(user, reply):
 		user.leave(reply)
 
 	else:
-		user.darklord_level += 2
+		# user.darklord_level += 2
 		reply(
 			'*Из-под капюшона послышалось шипение*\n'
-			'Ой-ой! Кажется он не в духе!\n'
+			'Ой-ой! Кажется он не в духе!'
 			'Может решим все по хорошему?'
 		)
