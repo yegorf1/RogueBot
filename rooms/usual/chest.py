@@ -50,4 +50,3 @@ def action(user, reply, text):
 				user.add_item('loot', 'mage_amulet')
 
 	user.leave(reply)
-
