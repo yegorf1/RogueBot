@@ -43,7 +43,7 @@ def enter(user, reply):
 				'Верни ему то что он просит! НЕМЕДЛЕННО!'
 			)
 
-		user.user.set_room_temp('question')
+		user.set_room_temp('question')
 
 
 def dice(user, reply, result, subject=None):
