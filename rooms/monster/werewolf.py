@@ -7,5 +7,6 @@ coins = 21
 
 loot = [ ]
 
+
 def enter(user, reply):
 	reply('Чудовищное волкоподобное существо!')
