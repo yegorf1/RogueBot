@@ -55,8 +55,8 @@ def dice(user, reply, result, subject=None):
 			user.leave(reply)
 
 		else:
-			reply('ОЙ! Как смешно лопнула твоя голова!')
-			user.death(reply)
+			reply('Не вышло!\nНу ни чего я буду за тебя болеть!')
+			# тут нужно запустить обычый обой
 
 
 def action(user, reply, text):
