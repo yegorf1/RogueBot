@@ -1,5 +1,6 @@
 name = 'Сундук'
 
+ACTVATED = False
 actions = [ 'Открыть сундку', 'Уйти' ]
 
 hp = 50
@@ -9,11 +10,19 @@ coins = 500
 
 loot = [ ]
 
+
 def get_actions(user):
-	return actions
+	user.set_room_temp(ACTVATED, True)
+
+	if ACTVATED:
+		return user.get_fight_actions()
+	else:
+		return actions
 
 def enter(user, reply):
 	reply('Ты заходишь в комнату и видешь сундук.\nОбычный сундук')
+
+	user.set_room_temp(ACTVATED, False)
 
 
 def action(user, reply, text):
@@ -28,8 +37,6 @@ def action(user, reply, text):
 			'...\n'
 			'_МИМИК_\n'
 		)
-
-		user.fight_action(reply, text)
 
 	else:
 
