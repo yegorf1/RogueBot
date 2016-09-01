@@ -50,7 +50,7 @@ def dice(user, reply, result, subject=None):
 
 	if subject == ESCAPE:
 
-		if result > (DICE_MAX / 3) * 2:
+		if result > DICE_MIDDLE:
 			reply('Тебе удалось! Надеюсь мы больше не встретим этого мерзкого типа!')
 			user.leave(reply)
 
