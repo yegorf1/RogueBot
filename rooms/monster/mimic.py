@@ -13,7 +13,7 @@ loot = [ ]
 
 def get_actions(user):
 
-	if user.set_room_temp(ACTVATED, True):
+	if user.get_room_temp(ACTVATED, True):
 		return user.get_fight_actions()
 
 	else:
@@ -28,16 +28,20 @@ def enter(user, reply):
 
 def action(user, reply, text):
 
-	if text == actions[0]:
-		reply(
-			'Ты подходишь к сундуку...\n'
-			'...\n'
-			'...\n'
-			'...\n'
-			'...\n'
-			'...\n'
-			'_МИМИК_\n'
-		)
+	if user.get_room_temp(ACTVATED, True):
+		
+		if text == actions[0]:
+			reply(
+				'Ты подходишь к сундуку...\n'
+				'...\n'
+				'...\n'
+				'...\n'
+				'...\n'
+				'...\n'
+				'_МИМИК_\n'
+			)
+
+			user.fight_action(reply)
 
 	else:
 		user.leave(reply)
