@@ -40,5 +40,4 @@ def action(user, reply, text):
 		)
 
 	else:
-
 		user.leave(reply)
