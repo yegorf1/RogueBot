@@ -45,3 +45,4 @@ def action(user, reply, text):
 				user.set_room_temp(ACTIVATED, True)
 		else:
 			user.leave(reply)
+
