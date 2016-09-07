@@ -2,7 +2,7 @@
 READY = 'Войти в туман'
 ESCAPE = 'Уйти'
 
-name = 'Слендермэн-квест'
+name = ''
 
 def enter(user, reply):
 	reply('Ты ничего не видишь, здесь все в тумане')
@@ -25,7 +25,7 @@ def action(user,reply, text):
 	elif question == 'third':
 		if text == 'Идти на шум':
 			reply('Шум усиливается, внезапно из-за деревьев возник неестественно высокий человек.\nТы не можешь двигаться.\nТьма окутала твоё сознание')
-			user.death(reply, reason=name)
+			user.death(reply, reason='Слендер')
 		else:
 			reply('Ты бежишь , постепенно шум утихает. Ты осматриваешься и замечаешь что находишься на границе леса.\nВдалеке виднеется водонапорная вышка, парк трейлеров и какой-то ангар, но дорога есть только к вышке.')
 			user.set_room_temp('question', 'forth')
@@ -55,7 +55,7 @@ def action(user,reply, text):
 	elif question == 'nineth':
 		if text == 'Выбежать из ангара':
 			reply('Выбежав из ангара, ты столкнулся с ним лицом к лицу.\nТьма окутала твоё сознание')
-			user.death(reply, reason=name)
+			user.death(reply, reason='Слендер')
 		else:
 			reply('Ты прячешься под столом. странно, но это сработало, шум утих.')
 			user.set_room_temp('question', 'tenth')
@@ -70,7 +70,7 @@ def action(user,reply, text):
 	elif question == 'dozenth':
 		if text == 'Обернуться':
 			reply('Это было глупо.\nТьма окутала твоё сознание.')
-			user.death(reply, reason=name)
+			user.death(reply, reason='Слендер')
 		else:
 			reply('Ты добегаешь до трейлеров, шум ослаб, но не исчез. Осмотревшись, ты не видишь последнего рисунка, надо еще осмотреться')
 			user.set_room_temp('question', 'thirteenth')
@@ -89,7 +89,7 @@ def action(user,reply, text):
 	elif question == 'sixteenth':
 		if text == 'Бежать к двери':
 			reply('Ты же не думал, что получится?\nТьма окутала твоё сознание.')
-			user.death(reply, reason=name)
+			user.death(reply, reason='Слендер')
 		else:
 			reply('Ты заметил, как ноги остановились вдалеке от двери. У тебя есть шанс!')
 			user.set_room_temp('question', 'seventeenth')
