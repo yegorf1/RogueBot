@@ -2,7 +2,7 @@
 READY = 'Войти в туман'
 ESCAPE = 'Уйти'
 
-name = ''
+name = 'Туман'
 
 def enter(user, reply):
 	reply('Ты ничего не видишь, здесь все в тумане')
