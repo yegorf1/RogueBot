@@ -35,6 +35,7 @@ class User(object):
 		self.items = [ ]
 		self.active_items = [ ]
 		self.inventory_page = 0
+		self.faveitem = ''
 
 		self.gods = [ locale_manager.get('BUDDHA'), locale_manager.get('JESUS'), locale_manager.get('ALLAH'), locale_manager.get('AUTHOR') ]
 		self.gods_level = [ 0 for g in self.gods ]
