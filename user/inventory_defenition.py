@@ -4,6 +4,7 @@ from constants import *
 from collections import Counter
 from localizations import locale_manager
 
+faveitem=""
 def open_inventory(self, reply):
 	self.state = 'inventory'
 
@@ -23,6 +24,8 @@ def open_inventory(self, reply):
 	begin = min(self.inventory_page * INVENTORY_PAGE_SIZE, len(selected_items) - 1)
 	end = min((self.inventory_page + 1) * INVENTORY_PAGE_SIZE, len(selected_items))
 
+	
+	
 	for i in selected_items[begin:end]:
 		if i is not None:
 			acts = [ ]
@@ -38,6 +41,8 @@ def open_inventory(self, reply):
 				pass#actions.append(locale_manager.get('ACTIVATE') + i.name)
 
 			acts.append(locale_manager.get('THROW_AWAY') + i.name)
+			acts.append(locale_manager.get('ADD_FAVE') + i.name + locale_manager.get('MAKE_FAVE'))
+			
 
 			actions.append(acts)
 
@@ -50,6 +55,7 @@ def open_inventory(self, reply):
 	reply(msg, actions)
 
 def inventory(self, reply, text):
+
 	if text == locale_manager.get('TO_CORRIDOR'):
 		self.open_corridor(reply)
 	elif False and text.startswith(locale_manager.get('ACTIVATE')):
@@ -88,6 +94,14 @@ def inventory(self, reply, text):
 	elif text == locale_manager.get('NEXT'):
 		self.inventory_page = self.inventory_page + 1
 		self.open_inventory(reply)
+	elif text.startswith(locale_manager.get('ADD_FAVE')):
+		buttontext = text[:0] + text[9:]
+		buttontext = buttontext[:-12]
+		self.faveitem = buttontext
+		self.open_inventory(reply)
+		'''
+		Извлечение названия предмета из названия кнопки и запись в self.faveitem
+		'''
 	else:
 		items = self.get_items()
 		

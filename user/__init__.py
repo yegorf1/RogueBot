@@ -35,6 +35,7 @@ class User(object):
 		self.items = [ ]
 		self.active_items = [ ]
 		self.inventory_page = 0
+		self.faveitem = ''
 
 		self.gods = [ locale_manager.get('BUDDHA'), locale_manager.get('JESUS'), locale_manager.get('ALLAH'), locale_manager.get('AUTHOR') ]
 		self.gods_level = [ 0 for g in self.gods ]
@@ -104,7 +105,7 @@ class User(object):
 	from user.death_defenition import update_leaderbord, death, reborn
 	from user.fight_defenition import get_fight_actions, fight_dice, fight_action, fight_answer, escape, won
 	from user.gods_defenition import evilgod, god_love, prayto, pray, divine_intervention
-	from user.inventory_defenition import open_inventory, inventory
+	from user.inventory_defenition import open_inventory, inventory, faveitem
 	from user.items_defenition import remove_item, remove_items_with_tag, deactivate_item_by_name
 	from user.items_defenition import remove_item_by_name, get_item_by_name, get_items, get_active_items
 	from user.items_defenition import add_item, get_active_slots_len, has_item

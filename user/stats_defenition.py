@@ -11,6 +11,7 @@ def debug_info(self):
 	msg += 'max_mp: ' + str(self.max_mp) + '\n'
 	msg += 'state: ' + str(self.state) + '\n'
 	msg += 'inventory_page: ' + str(self.inventory_page) + '\n'
+	msg += 'faveitem: ' + str(self.faveitem) + '\n'
 	msg += 'gods: ' + str(self.gods) + '\n'
 	msg += 'gods_level: ' + str(self.gods_level) + '\n'
 	msg += 'gods: ' + str(self.gods) + '\n'

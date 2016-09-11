@@ -13,14 +13,24 @@ def get_fight_actions(self):
 		locale_manager.get('KICK_MAGIC'),
 		locale_manager.get('USE') + locale_manager.get('IMAGINATION')
 	]
+	
+	actions_fave = [
+		'Использовать: ' + self.faveitem,
+		locale_manager.get('KICK_ARM'),
+		locale_manager.get('KICK_MAGIC'),
+		locale_manager.get('USE') + locale_manager.get('IMAGINATION')
+	]	
 
 	for i in self.get_items():
 		if i.fightable:
 			act = locale_manager.get('USE') + i.name
 			if act not in actions:
 				actions.append(act)
-
-	return actions
+	
+	if self.faveitem != '':
+		return actions_fave
+	else:
+		return actions
 
 def fight_dice(self, reply, result, subject=None):
 	room = roomloader.load_room(self.room[1], self.room[0])
