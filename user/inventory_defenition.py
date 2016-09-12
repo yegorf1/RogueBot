@@ -23,8 +23,6 @@ def open_inventory(self, reply):
 	begin = min(self.inventory_page * INVENTORY_PAGE_SIZE, len(selected_items) - 1)
 	end = min((self.inventory_page + 1) * INVENTORY_PAGE_SIZE, len(selected_items))
 
-	
-	
 	for i in selected_items[begin:end]:
 		if i is not None:
 			acts = [ ]
@@ -40,7 +38,6 @@ def open_inventory(self, reply):
 				pass#actions.append(locale_manager.get('ACTIVATE') + i.name)
 
 			acts.append(locale_manager.get('THROW_AWAY') + i.name)
-			
 			#Только боевые вещи могут быть добавлены в избранное
 			if i.fightable:
 				acts.append(locale_manager.get('ADD_FAVE') + i.name + locale_manager.get('MAKE_FAVE'))
