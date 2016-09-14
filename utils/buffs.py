@@ -44,11 +44,11 @@ class DevilMoney(Buff):
 		super(DevilMoney, self).__init__(7, mana_damage_plus=0)
 	def on_end(self, user, reply, room):
 		user.death(reply, reason='Сделка с дьяволом')
-		user.remove_item('special', 'lepergold')
+		user.remove_item('lepergold')
 
 class DevilEntity(Buff):
 	def __init__(self,):
 		super(DevilEntity, self).__init__(7, damage_plus=3000000, mana_damage_plus=3000000)
 	def on_end(self, user, reply, room):
 		user.death(reply, reason='Сделка с дьяволом')
-		user.remove_item('special', 'lepergold')		
+		user.remove_item('lepergold')		
