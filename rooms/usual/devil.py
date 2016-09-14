@@ -39,41 +39,41 @@ def action(user, reply, text):
 			user.set_room_temp('question', 'forth')
 		else:
 			reply('Внезапно он исчез из виду и вы услышали шепот у себя в голове\n-Может ты хочешь бесконечную силу, чтобы все трепетали пред тобой?\nИли ты хочешь быть гением, способным на всё?\nХотя нет, наверное, ты хочешь несметного богатства?\nИли же всё сразу?\nВыбирай, смертный!')	
-			user.set_room_temp('question', 'propose')
+			user.set_room_temp('question', 'fifth')
 	elif question == 'forth':
 		if text == 'Я пойду, пожалуй':
 			reply(' Дьявол изменился в лице, кажется ему не понравилось это. -Тогда вот тебе маленький подарок, чтобы ты знал, что не нужно отрывать меня от работы по пустякам')
 			user.max_hp -= 50
 			user.leave(reply)
-		elif text == 'А что ты можешь предложить мне?':
+		elif text == 'А что ты предложишь мне?':
 			reply('Внезапно он исчез из виду и вы услышали шепот у себя в голове\n-Может ты хочешь бесконечную силу, чтобы все трепетали пред тобой?\nИли ты хочешь быть гением, способным на всё?\nХотя нет, наверное, ты хочешь несметного богатства?\nИли же всё сразу?\nВыбирай, смертный!')	
-			user.set_room_temp('question', 'propose')
-	elif question == 'propose':
+			user.set_room_temp('question', 'fifth')
+	elif question == 'fifth':
 		if text == 'Силу!':
 			reply('Отличный выбор, а теперь подпиши здесь и вот здесь.\nПеред вами возник исписанный на непонятном языке пергамент с двумя галочками.\n-Ну же, условия стандартные, когда умрешь я заберу твою душу.')
 			user.new_buff(DevilPower())
-			user.set_room_temp('question', 'deathq')
+			user.set_room_temp('question', 'sixth')
 		elif text == 'Знания!':
 			reply('Отличный выбор, а теперь подпиши здесь и вот здесь.\nПеред вами возник исписанный на непонятном языке пергамент с двумя галочками.\n-Ну же, условия стандартные, когда умрешь я заберу твою душу.')
 			user.new_buff(DevilInt())
-			user.set_room_temp('question', 'deathq')
+			user.set_room_temp('question', 'sixth')
 		elif text == 'Деньги!':
 			reply('Отличный выбор, а теперь подпиши здесь и вот здесь.\nПеред вами возник исписанный на непонятном языке пергамент с двумя галочками.\n-Ну же, условия стандартные, когда умрешь я заберу твою душу.')
 			user.new_buff(DevilMoney())
 			user.gold += 500000
 			user.add_item('special', 'lepergold')
-			user.set_room_temp('question', 'deathq')
+			user.set_room_temp('question', 'sixth')
 		else:
 			reply('-Вот это жадность. Ты напоминаешь мне меня в молодости, я тогда тоже был ненасытен...\nДьявол улыбнулся своим воспоминаниям.\n-Вернемся к делу! Подпиши здесь и здесь.\nПеред вами возник исписанный на непонятном языке пергамент с двумя галочками.\n-Ну же, условия стандартные, когда умрешь я заберу твою душу.')
 			user.new_buff(DevilEntity())
 			user.gold += 500000
 			user.add_item('special', 'lepergold')
-			user.set_room_temp('question', 'deathq')
-	elif question == 'deathq':
+			user.set_room_temp('question', 'sixth')
+	elif question == 'sixth':
 		if text == 'А когда я умру?':
 			reply('У дьявола сверкнули глаза.\n-Увы этого никто не знает, даже я.')
-			user.set_room_temp('question', 'signature')
-	elif question == 'signature':
+			user.set_room_temp('question', 'seventh')
+	elif question == 'seventh':
 		if text == 'Подписать':
 			reply('-Замечательно! А теперь мне пора вернуться к работе, а ты можешь идти и покорять мир!\nУ тебя в руках остался контракт, вглядевшись, ты видишь цифру 7...\n-Дай сюда! Он тебе не нужен.')
 			user.leave(reply)	
@@ -82,7 +82,7 @@ def get_actions(user):
 	question = user.get_room_temp('question', def_val='first')
 	ans = [ ]
 
-	if question == ' first':
+	if question == 'first':
 		ans = [ 'Кашлянуть', 'Подойти к столу', 'Уйти' ]
 	elif question == 'second':
 		ans = [ 'Я пойду, пожалуй', 'Кто вы?' ]
@@ -90,11 +90,11 @@ def get_actions(user):
 		ans = [ 'Я пойду, пожалуй', 'Вы дьявол?', 'А что ты предложишь мне?' ]
 	elif question == 'forth':
 		ans = [ 'Я пойду, пожалуй', 'А что ты предложишь мне?' ]
-	elif question == 'propose':
+	elif question == 'fifth':
 		ans = [ 'Силу!', 'Знания!', 'Деньги!', 'Я хочу всё!' ]	
-	elif question == 'deathq':
+	elif question == 'sixth':
 		ans = [ 'А когда я умру?' ]	
-	elif question == 'signature':
+	elif question == 'seventh':
 		ans = [ 'Подписать' ]
 
 	return ans		
