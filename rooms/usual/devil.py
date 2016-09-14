@@ -23,6 +23,7 @@ def action(user, text, reply):
 			reply('Ты подходишь вплотную к столу. Человек отрывается от бумаг, поправляет очки и выжидательно смотрит на тебя')
 			user.set_room_temp('question', 'second')
 		else:
+			reply('На вас не обратили внимания и вы ушли')
 			user.leave(reply)
 	elif question == 'second':
 		if text == MLEAVE:
