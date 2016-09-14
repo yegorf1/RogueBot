@@ -27,3 +27,28 @@ class RainbowBuff(Buff):
 	def __init__(self):
 		super(RainbowBuff, self).__init__(50, name='rainbow', mana_damage_plus=50)
 		
+class DevilPower(Buff):
+	def __init__(self,):
+		super(DevilPower, self).__init__(7, damage_plus=3000000)
+	def on_end(self, user, reply, room):
+		user.death(reply, reason='Сделка с дьяволом')
+
+class DevilInt(Buff):
+	def __init__(self,):
+		super(DevilInt, self).__init__(7, mana_damage_plus=3000000)
+	def on_end(self, user, reply, room):
+		user.death(reply, reason='Сделка с дьяволом')
+
+class DevilMoney(Buff):
+	def __init__(self,):
+		super(DevilMoney, self).__init__(7, mana_damage_plus=0)
+	def on_end(self, user, reply, room):
+		user.death(reply, reason='Сделка с дьяволом')
+		user.remove_item('special', 'lepergold')
+
+class DevilEntity(Buff):
+	def __init__(self,):
+		super(DevilEntity, self).__init__(7, damage_plus=3000000, mana_damage_plus=3000000)
+	def on_end(self, user, reply, room):
+		user.death(reply, reason='Сделка с дьяволом')
+		user.remove_item('special', 'lepergold')		
