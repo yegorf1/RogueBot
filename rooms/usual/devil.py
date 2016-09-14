@@ -19,7 +19,7 @@ def action(user, reply, text):
 			reply('Ты подходишь вплотную к столу. Человек отрывается от бумаг, поправляет очки и выжидательно смотрит на тебя')
 			user.set_room_temp('question', 'second')
 		else:
-			reply('На вас не обратили внимания и вы ушли')
+			reply('На тебя не обратили внимания и ты ушёл')
 			user.leave(reply)
 	elif question == 'second':
 		if text == 'Я пойду, пожалуй':
