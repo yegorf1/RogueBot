@@ -11,6 +11,8 @@ def enter(user, reply):
 
 def action(user, reply, text):
 	question = user.get_room_temp('question', def_val='first')
+	MADE_SOLUTION_TEXT = 'Отличный выбор, а теперь подпиши здесь и вот здесь.\nПеред вами возник исписанный на непонятном языке пергамент с двумя галочками.\n — Ну же, условия стандартные: когда умрешь я заберу твою душу.'
+	CURSE_TEXT = ' изменился в лице, кажется ему не понравилось это. — Тогда вот тебе маленький подарок, чтобы ты знал, что не нужно отрывать меня от работы по пустякам.'
 
 	if question == 'first':
 		if text == 'Кашлянуть':
@@ -31,7 +33,7 @@ def action(user, reply, text):
 			user.set_room_temp('question', 'third')
 	elif question == 'third':
 		if text == 'Я пойду, пожалуй':
-			reply('Человек изменился в лице, кажется ему не понравилось это. — Тогда вот тебе маленький подарок, чтобы ты знал, что не нужно отрывать меня от работы по пустякам.')
+			reply('Человек {0}'.format(CURSE_TEXT))
 			user.max_hp -= 50
 			user.leave(reply)
 		elif text == 'Вы дьявол?':
@@ -42,6 +44,7 @@ def action(user, reply, text):
 			user.set_room_temp('question', 'fifth')
 	elif question == 'forth':
 		if text == 'Я пойду, пожалуй':
+			reply('Дьявол {0}'.format(CURSE_TEXT))
 			reply('Дьявол изменился в лице, кажется ему не понравилось это. — Тогда вот тебе маленький подарок, чтобы ты знал, что не нужно отрывать меня от работы по пустякам.')
 			user.max_hp -= 50
 			user.leave(reply)
@@ -50,15 +53,15 @@ def action(user, reply, text):
 			user.set_room_temp('question', 'fifth')
 	elif question == 'fifth':
 		if text == 'Силу!':
-			reply('Отличный выбор, а теперь подпиши здесь и вот здесь.\nПеред вами возник исписанный на непонятном языке пергамент с двумя галочками.\n — Ну же, условия стандартные: когда умрешь я заберу твою душу.')
+			reply(MADE_SOLUTION_TEXT)
 			user.new_buff(DevilPower())
 			user.set_room_temp('question', 'sixth')
 		elif text == 'Знания!':
-			reply('Отличный выбор, а теперь подпиши здесь и вот здесь.\nПеред вами возник исписанный на непонятном языке пергамент с двумя галочками.\n — Ну же, условия стандартные: когда умрешь я заберу твою душу.')
+			reply(MADE_SOLUTION_TEXT)
 			user.new_buff(DevilInt())
 			user.set_room_temp('question', 'sixth')
 		elif text == 'Деньги!':
-			reply('Отличный выбор, а теперь подпиши здесь и вот здесь.\nПеред вами возник исписанный на непонятном языке пергамент с двумя галочками.\n — Ну же, условия стандартные: когда умрешь я заберу твою душу.')
+			reply(MADE_SOLUTION_TEXT)
 			user.new_buff(DevilMoney())
 			user.gold += 500000
 			user.add_item('special', 'lepergold')
