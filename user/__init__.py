@@ -48,6 +48,10 @@ class User(object):
 		self.visited_shop = False
 		self.shop_items = [ ]
 		self.shop_names = [ ]
+		
+		self.wet = False
+		self.wet_enemy = False
+		self.used_armor = False
 
 		self.tags = [ ]
 
