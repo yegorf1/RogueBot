@@ -15,11 +15,14 @@ def get_fight_actions(self):
 	]
 
 	for i in self.get_items():
-		if i.fightable:
+		if i.fightable and i.name != self.faveitem: #исколючение любимого предмета из общего списка
 			act = locale_manager.get('USE') + i.name
 			if act not in actions:
 				actions.append(act)
-
+	# добавление любимого предмета в начало списка
+	if self.faveitem != '':
+		actions[0:0] = ['Использовать: ' + self.faveitem]
+	
 	return actions
 
 def fight_dice(self, reply, result, subject=None):

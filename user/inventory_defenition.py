@@ -38,6 +38,10 @@ def open_inventory(self, reply):
 				pass#actions.append(locale_manager.get('ACTIVATE') + i.name)
 
 			acts.append(locale_manager.get('THROW_AWAY') + i.name)
+			#Только боевые вещи могут быть добавлены в избранное
+			if i.fightable:
+				acts.append(locale_manager.get('ADD_FAVE') + i.name + locale_manager.get('MAKE_FAVE'))
+			
 
 			actions.append(acts)
 
@@ -50,6 +54,7 @@ def open_inventory(self, reply):
 	reply(msg, actions)
 
 def inventory(self, reply, text):
+
 	if text == locale_manager.get('TO_CORRIDOR'):
 		self.open_corridor(reply)
 	elif False and text.startswith(locale_manager.get('ACTIVATE')):
@@ -88,6 +93,14 @@ def inventory(self, reply, text):
 	elif text == locale_manager.get('NEXT'):
 		self.inventory_page = self.inventory_page + 1
 		self.open_inventory(reply)
+	elif text.startswith(locale_manager.get('ADD_FAVE')):
+		buttontext = text[len(locale_manager.get('ADD_FAVE')):]
+		buttontext = buttontext[:-len(locale_manager.get('MAKE_FAVE'))]
+		self.faveitem = buttontext
+		self.open_inventory(reply)
+		'''
+		Извлечение названия предмета из названия кнопки и запись в self.faveitem
+		'''
 	else:
 		items = self.get_items()
 		
