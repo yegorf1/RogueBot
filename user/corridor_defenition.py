@@ -34,6 +34,13 @@ def open_corridor(self, reply):
 	reply(locale_manager.get('WHAT_WILL_WE_DO'), buttons)
 
 def corridor(self, reply, text):
+
+	self.wet = False
+	self.wet_enemy = False
+	if self.used_armor:
+		self.defence -= 1000	
+	self.used_armor = False
+	
 	if text.startswith(locale_manager.get('OPEN_NEXT_DOOR').split()[0]):
 		self.open_room(reply)
 	elif text == locale_manager.get('USE_SIGN'):
