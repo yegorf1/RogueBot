@@ -49,6 +49,10 @@ class User(object):
 		self.shop_names = [ ]
 
 		self.tags = [ ]
+		
+		self.wet = False
+		self.wet_enemy = False
+		self.used_armor = False
 
 		self.room = ('', '')
 		self.room_temp = { }
