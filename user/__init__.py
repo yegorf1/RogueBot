@@ -51,7 +51,7 @@ class User(object):
 
 		self.tags = [ ]
 		
-		self.wet = False			#Оставил как есть
+		self.wet = False
 		self.wet_enemy = False
 		self.used_armor = False
 
