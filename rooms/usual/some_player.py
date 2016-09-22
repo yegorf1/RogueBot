@@ -49,6 +49,7 @@ def steal(user, steal_user, is_last, reply):
 	steal_user.remove_item(item_to_steal.code_name)
 	steal_user.add_item('special', 'steal_note')
 	steal_user.set_variable('stealer', user.name)
+	steal_user.set_variable('stolen_item', item_to_steal.name)
 	usermanager.save_user(steal_user)
 
 	if is_last:
