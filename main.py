@@ -61,7 +61,7 @@ def _reply(c_id, bot, txt, buttons=None, photo=None, repeat=True):
 				raise e
 
 			if '429' in str(e):
-				send_job = Job(reply_job, 1, repeat=False, context=(c_id, bot, txt, buttons, photo))
+				send_job = Job(reply_job, 1, repeat=False, context=(c_id, bot, txt, buttons, photo, False))
 				updater.job_queue.put(send_job)
 			else:
 				raise e
@@ -74,15 +74,16 @@ def _reply(c_id, bot, txt, buttons=None, photo=None, repeat=True):
 
 
 def reply_job(bot, job):
-	c_id, bot, txt, buttons, photo = job.context
-	reply(c_id, bot, txt, buttons, photo, repeat=False)
+	c_id, bot, txt, buttons, photo, repeat = job.context
+	queue.append([ c_id, bot, txt, buttons, photo, repeat ])
 
 
 def reply(c_id, bot, txt, buttons=None, photo=None, repeat=True):
 	if c_id == 0:
 		return
 
-	queue.append([ c_id, bot, txt, buttons, photo, repeat ])
+	send_job = Job(reply_job, 1, repeat=False, context=(c_id, bot, txt, buttons, photo, False))
+	updater.job_queue.put(send_job)
 
 
 def start(bot, update):
