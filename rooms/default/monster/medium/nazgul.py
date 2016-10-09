@@ -1,6 +1,6 @@
 name = 'Назгул'
 
-hp = 100
+hp = 180
 damage_range = ( 10, 15 )
 
 coins = 130
