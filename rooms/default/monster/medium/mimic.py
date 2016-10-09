@@ -3,8 +3,8 @@ name = 'Сундук'
 ACTIVATED = 'activated'
 actions = ['Открыть сундук', 'Уйти']
 
-hp = 50
-damage_range = (50, 50)
+hp = 150
+damage_range = (30, 50)
 
 coins = 150
 

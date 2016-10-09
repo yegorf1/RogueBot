@@ -1,5 +1,5 @@
 ﻿name = 'Вейпер'
-hp = 80
+hp = 480
 damage_range = ( 10, 20 )
 loot = [ 'mechmod' ]
 

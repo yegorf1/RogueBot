@@ -1,8 +1,8 @@
 name = 'Орк'
-hp = 130
+hp = 530
 damage_range = ( 20, 40 )
 
-coins = 150
+coins = 190
 
 loot = [ 'tooth' ]
 

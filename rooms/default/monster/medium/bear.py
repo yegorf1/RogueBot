@@ -1,9 +1,9 @@
 name = 'Медведь'
 
-hp = 70
+hp = 200
 damage_range =  ( 15, 30 )
 
-coins = 50
+coins = 80
 
 loot = [ ]
 

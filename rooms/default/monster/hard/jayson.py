@@ -1,9 +1,9 @@
 name = 'Джейсон Вурхиз'
-hp = 100
+hp = 700
 
 damage_range = ( 15, 30 )
 
-coins = 50
+coins = 350
 loot = [ ]
 
 def enter(user, reply):

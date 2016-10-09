@@ -1,6 +1,6 @@
 name = 'Дракон'
 
-hp = 140
+hp = 340
 damage_range =  ( 15, 30 )
 
 coins = 300

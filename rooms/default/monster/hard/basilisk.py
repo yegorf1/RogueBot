@@ -2,10 +2,10 @@ from random import randrange
 
 name = 'Василиск'
 
-hp = 135
+hp = 635
 damage_range =  ( 16, 25 )
 
-coins = randrange(100, 150, 5)
+coins = randrange(100, 400, 5)
 
 loot = [ 'tooth_basilisk' ]
 

@@ -2,7 +2,7 @@ from constants import *
 
 name = 'Длинноволосая брюнетка'
 
-hp = 120
+hp = 170
 element = NONE
 damage_range =  ( 16, 18 )
 
