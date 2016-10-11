@@ -76,7 +76,7 @@ def fight_action(self, reply, text):
 			if item.can_use(self, reply, room):
 				item.success(self, reply, room)
 				dmg += item.fight_use(self, reply, room)
-				self.count_armatk += 1; 
+				self.count_armatk += 1
 			else:
 				item.failure(self, reply, room)
 
