@@ -28,7 +28,7 @@ def get_fight_actions(self):
 def fight_dice(self, reply, result, subject=None):
 	room = roomloader.load_room(self.room[1], self.room[0], self)
 	if subject == 'noname':
-		dmg = result + self.get_damage_bonus(reply) // 2
+		dmg = result + self.get_damage_bonus(reply) +  self.dice_stats  // 2 'Осторожно , добавил self.dice_stats '
 
 		reply(locale_manager.get('IMAGINATION_FIGHT').format(dmg))
 
@@ -43,12 +43,14 @@ def fight_action(self, reply, text):
 	room = roomloader.load_room(self.room[1], self.room[0], self)
 	if text == locale_manager.get('KICK_ARM'):
 		dmg = self.get_damage() + self.get_damage_bonus(reply)
+		self.count_armatk += 1;
 
 		reply(locale_manager.get('MONSTER_DAMAGED').format(dmg))
 
 		room.make_damage(self, reply, dmg)
 	elif text == locale_manager.get('KICK_MAGIC'):
 		dmg = self.get_mana_damage()
+		self.count_mpatk += 1;
 
 		if self.use_mana(5):
 			reply(locale_manager.get('MAGIC_KICKED').format(dmg))
@@ -74,6 +76,7 @@ def fight_action(self, reply, text):
 			if item.can_use(self, reply, room):
 				item.success(self, reply, room)
 				dmg += item.fight_use(self, reply, room)
+				self.count_armatk += 1; 
 			else:
 				item.failure(self, reply, room)
 
@@ -133,6 +136,15 @@ def won(self, reply, tornament=False, boss=None):
 
 	self.monsters_killed += 1
 	room.on_won(self, reply)
+
+
+        if self.monsters_killed % 10 == 0 and self.count_armatk > self.count_mpatk :
+                self.damage +=1
+        elif self.monsters_killed % 10 == 0 and self.count_armatk < self.count_mpatk :        
+                self.mana_damage +=1;
+        else self.monsters_killed % 10 == 0 :
+                self.charisma += 1
+                self.dice_stats += 1
 
 	items = [ itemloader.load_item(i, 'loot') for i in room.loot ]
 	loot = ', '.join([ item.name for item in items ]) if len(items) > 0 else 'Ничего.'

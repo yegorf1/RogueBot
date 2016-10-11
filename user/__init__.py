@@ -43,6 +43,7 @@ class User(object):
 		self.defence = 1
 		self.charisma = 0
 		self.mana_damage = 0
+		self.dice_stats = 0 //'Для пассивного кача статов'
 
 		self.visited_shop = False
 		self.shop_items = [ ]
@@ -62,6 +63,8 @@ class User(object):
 		self.last_message = datetime.now()
 		self.rooms_count = 0
 		self.monsters_killed = 0
+		self.count_armatk = 0;      //'Количество атак с руки '
+		self.count_mpatk = 0;      //'Количество атак от магии '
 
 		self.subject = None
 
