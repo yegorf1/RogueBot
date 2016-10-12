@@ -43,7 +43,7 @@ class User(object):
 		self.defence = 1
 		self.charisma = 0
 		self.mana_damage = 0
-		self.dice_stats = 0  #'Для пассивного кача статов'
+		self.dice_stats = 0  #'Для пассивного кача статов'		
 
 		self.visited_shop = False
 		self.shop_items = [ ]
@@ -64,7 +64,7 @@ class User(object):
 		self.rooms_count = 0
 		self.monsters_killed = 0
 		self.count_armatk = 0      #'Количество атак с руки '
-		self.count_mpatk = 0     #'Количество атак от магии '
+		self.count_mpatk = 0     #'Количество атак от магии '		
 
 		self.subject = None
 
@@ -174,3 +174,4 @@ class User(object):
 	from user.missions_defenition import new_mission, get_last_mission, pop_mission
 	from user.levels_defenition import prepare_boss, get_next_level, get_prev_level
 	
+
