@@ -29,7 +29,7 @@ def fight_dice(self, reply, result, subject=None):
 	room = roomloader.load_room(self.room[1], self.room[0], self)
 	if subject == 'noname':
 		dmg = result + self.get_damage_bonus(reply) // 2 
-		dmg += self.dice_stats //'Осторожно , добавил self.dice_stats '
+		dmg += self.dice_stats #'Осторожно , добавил self.dice_stats '
                 
 		reply(locale_manager.get('IMAGINATION_FIGHT').format(dmg))
 
@@ -141,18 +141,18 @@ def won(self, reply, tornament=False, boss=None):
 	if self.monsters_killed % 10 == 0 and self.count_armatk > self.count_mpatk :
 		reply('Ты стал(а) сильнее, теперь удар с руки приносит больше боли монстрам')
 		self.count_mpatk = 0
-		self.count_armatk = 0      //'Количество атак с руки '
+		self.count_armatk = 0    #'Количество атак с руки '
 		self.damage +=1
 	elif self.monsters_killed % 10 == 0 and self.count_armatk < self.count_mpatk :
 		self.count_mpatk = 0
-		self.count_armatk = 0      //'Количество атак с руки '
+		self.count_armatk = 0     #'Количество атак с руки '
 		self.mana_damage +=1
 		reply('Ты стал(а) сильнее, теперь магический удар приносит больше боли монстрам')		
 	elif self.monsters_killed % 10 == 0 :
 		self.dice_stats += 1
 		self.charisma += 1
-		self.count_mpatk = 0
-		self.count_armatk = 0      //'Количество атак с руки '
+		self.count_mpatk = 0      #Количество магических атак
+		self.count_armatk = 0     #'Количество атак с руки '
 		reply('Теперь ты лучше бросаешь кубик и умеешь общаться') 
 
 	items = [ itemloader.load_item(i, 'loot') for i in room.loot ]
