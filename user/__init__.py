@@ -63,8 +63,8 @@ class User(object):
 		self.last_message = datetime.now()
 		self.rooms_count = 0
 		self.monsters_killed = 0
-		self.count_armatk = 0;      //'Количество атак с руки '
-		self.count_mpatk = 0;      //'Количество атак от магии '
+		self.count_armatk = 0      //'Количество атак с руки '
+		self.count_mpatk = 0     //'Количество атак от магии '
 
 		self.subject = None
 

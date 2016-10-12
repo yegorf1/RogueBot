@@ -140,11 +140,17 @@ def won(self, reply, tornament=False, boss=None):
 
         if self.monsters_killed % 10 == 0 and self.count_armatk > self.count_mpatk :
                 self.damage +=1
+                self.count_armatk = 0      //'Количество атак с руки '
+		self.count_mpatk = 0
         elif self.monsters_killed % 10 == 0 and self.count_armatk < self.count_mpatk :        
-                self.mana_damage +=1;
+                self.mana_damage +=1
+                self.count_armatk = 0      //'Количество атак с руки '
+		self.count_mpatk = 0
         else self.monsters_killed % 10 == 0 :
                 self.charisma += 1
                 self.dice_stats += 1
+                self.count_armatk = 0      //'Количество атак с руки '
+		self.count_mpatk = 0
 
 	items = [ itemloader.load_item(i, 'loot') for i in room.loot ]
 	loot = ', '.join([ item.name for item in items ]) if len(items) > 0 else 'Ничего.'
