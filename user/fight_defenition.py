@@ -29,7 +29,7 @@ def fight_dice(self, reply, result, subject=None):
 	room = roomloader.load_room(self.room[1], self.room[0], self)
 	if subject == 'noname':
 		dmg = result + self.get_damage_bonus(reply) // 2 
-                dmg += self.dice_stats //'Осторожно , добавил self.dice_stats '
+		dmg += self.dice_stats //'Осторожно , добавил self.dice_stats '
                 
 		reply(locale_manager.get('IMAGINATION_FIGHT').format(dmg))
 
