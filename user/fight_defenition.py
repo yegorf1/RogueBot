@@ -148,12 +148,12 @@ def won(self, reply, tornament=False, boss=None):
 		self.count_armatk = 0      //'Количество атак с руки '
 		self.mana_damage +=1
 		reply('Ты стал(а) сильнее, теперь магический удар приносит больше боли монстрам')		
-	else self.monsters_killed % 10 == 0 :
+	elif self.monsters_killed % 10 == 0 :
 		self.dice_stats += 1
 		self.charisma += 1
 		self.count_mpatk = 0
 		self.count_armatk = 0      //'Количество атак с руки '
-		reply('Теперь ты лучше бросаешь кубик и умеешь общаться')                
+		reply('Теперь ты лучше бросаешь кубик и умеешь общаться') 
 
 	items = [ itemloader.load_item(i, 'loot') for i in room.loot ]
 	loot = ', '.join([ item.name for item in items ]) if len(items) > 0 else 'Ничего.'
