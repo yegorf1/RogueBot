@@ -150,7 +150,7 @@ def action_choose_door_01(user, reply, text):
 
 	if text == actions_choose_door_01[1]:
 		msg = (
-			'Ты должен слушать подсказки и ненарушать их действий.\n'
+			'Ты должен слушать подсказки и не нарушать их действий.\n'
 			'Попробуем еще раз.\n\n'
 			'Перед тобой одна открытая дверь и ты зашел в эту дверь.'
 		)
@@ -166,7 +166,7 @@ def action_choose_door_01(user, reply, text):
 def action_choose_door_02(user, reply, text):
 	if text == actions_choose_door_02[0]:
 		msg = (
-			'Перед тобой две открытых дверей и ты зашел в дверь синего цвета.'
+			'Перед тобой две открытых двери и ты зашел в дверь синего цвета.'
 		)
 
 		reply(msg)
