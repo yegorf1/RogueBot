@@ -12,10 +12,10 @@ def enter(user, reply):
 	reply('Сегодня его выкуривали несколько раз. Он будет мстить.', photo='BQADAgADCgkAAmrZzgetbDY3dR3FjQI')
 
 def get_actions(user):
-	return user.get_fight_actions() + [ 'Начать кружится с ним' ]
+	return user.get_fight_actions() + [ 'Начать кружиться с ним' ]
 
 def action(user, reply, text):
-	if text == 'Начать кружится с ним':
+	if text == 'Начать кружиться с ним':
 		reply('Ты укружился обратно в коридор. А в карманах стало меньше денег.')
 
 		user.steal(150)
