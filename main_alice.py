@@ -50,6 +50,7 @@ def handle_dialog(req, res):
         # Это новый пользователь.
         # Инициализируем сессию и поприветствуем его.
         res['response']['text'] = 'Теперь скажи мне свое имя'
+        usermanager.new_user(user_id)
         return
     global text
     text =''
