@@ -70,8 +70,8 @@ def handle_dialog(req, res):
                 buttons_list.append(btn)
 
     usermanager.message(user_id, reply, req['request']['command'])
-    # Пользователь согласился, прощаемся.
-    res['response']['text'] = text
+    
+    res['response']['text'] = text.strip()
 
     res['response']['buttons'] = [
         {'title': btn, 'hide': False}
