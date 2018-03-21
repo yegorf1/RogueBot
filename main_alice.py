@@ -44,8 +44,8 @@ def main():
 
 # Функция для непосредственной обработки диалога.
 def handle_dialog(req, res):
-    user_id = req['session']['user_id']
-
+    user_id = 'alice' + req['session']['user_id']
+    
     if req['session']['new']:
         # Это новый пользователь.
         # Инициализируем сессию и поприветствуем его.
@@ -57,7 +57,7 @@ def handle_dialog(req, res):
         text = text + '\n\n' + txt
         return
 
-    usermanager.message(uid, reply, event[6])
+    usermanager.message(user_id, reply, event[6])
     # Пользователь согласился, прощаемся.
     res['response']['text'] = text
     return
