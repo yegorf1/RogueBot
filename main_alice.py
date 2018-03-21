@@ -53,9 +53,8 @@ def handle_dialog(req, res):
         return
     text =''
 
-    def reply(id, txt, buttons=None, photo=None):
+    def reply(txt, buttons=None, photo=None):
         text = text + '\n\n' + txt
-        return
 
     usermanager.message(user_id, reply, req['request']['command'])
     # Пользователь согласился, прощаемся.
