@@ -52,14 +52,16 @@ def handle_dialog(req, res):
         res['response']['text'] = 'Теперь скажи мне свое имя'
         return
     text =''
-    usermanager.message(uid, lambda *a, **kw: text = text + reply(c_id, *a, **kw) + '\n', event[6])
+
+    def reply(id, txt, buttons=None, photo=None):
+        text = text + '\n\n' + txt
+        return
+
+    usermanager.message(uid, reply, event[6])
     # Пользователь согласился, прощаемся.
     res['response']['text'] = text
     return
 
-
-def reply(id, txt, buttons=None, photo=None):
-    return txt
 
 
 
