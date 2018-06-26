@@ -15,6 +15,7 @@ import usermanager
 import telegram
 import logging
 import os
+import uuid
 
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s',
 					level=logging.INFO)
@@ -140,32 +141,45 @@ def debug_print(bot, update):
 def room(bot, update):
 	c_id = update.message.chat_id
 
-	if str(c_id) in config.MODERS_IDS:
+	if config.MODERS_IDS is True or str(c_id) in config.MODERS_IDS:
+		user = usermanager.get_user(update.message.chat_id)
+		user.cheater = True
+		usermanager.save_user(user)
+
 		cmd, room_type, name = update.message.text.split()
 		usermanager.open_room(c_id, lambda *a, **kw: reply(c_id, bot, *a, **kw), room_type, name)
 	else:
 		bot.sendMessage(update.message.chat_id, text='NO.')
 
 def give(bot, update):
-	if str(update.message.chat_id) in config.MODERS_IDS:
+	if config.MODERS_IDS is True or str(update.message.chat_id) in config.MODERS_IDS:
+		user = usermanager.get_user(update.message.chat_id)
+		user.cheater = True
+		usermanager.save_user(user)
+
 		cmd, item_type, name = update.message.text.split()
 		usermanager.give_item(update.message.chat_id, item_type, name)
 	else:
 		bot.sendMessage(update.message.chat_id, text='NO.')
 
 def gold(bot, update):
-	if str(update.message.chat_id) in config.MODERS_IDS:
+	if config.MODERS_IDS is True or str(update.message.chat_id) in config.MODERS_IDS:
 		cmd, integer = update.message.text.split()
 		integer = int(integer)
 
 		user = usermanager.get_user(update.message.chat_id)
+		user.cheater = True
 		user.gold += integer
 		usermanager.save_user(user)
 	else:
 		bot.sendMessage(update.message.chat_id, text='NO.')
 
 def pet(bot, update):
-	if str(update.message.chat_id) in config.MODERS_IDS:
+	if config.MODERS_IDS is True or str(update.message.chat_id) in config.MODERS_IDS:
+		user = usermanager.get_user(update.message.chat_id)
+		user.cheater = True
+		usermanager.save_user(user)
+
 		cmd, pet, name = update.message.text.split()
 		usermanager.new_pet(update.message.chat_id, pet, name)
 	else:
@@ -387,6 +401,31 @@ def cesar(bot, update):
 	v = databasemanager.get_variable('ces', def_val=True)
 	databasemanager.set_variable('ces', not v)
 
+def bot(bot, update):
+    c_id = update.message.chat_id
+    usr = usermanager.get_user(c_id)
+    usr.bot_token = str(uuid.uuid4())
+    bot.sendMessage(
+            c_id,
+            text=(
+                'Твой токен: `{token}`\n\n'
+                'Доступные методы:\n'
+                '  `send` ([демо]({url}/{token}/send?message=Hello!)) -- отправляет сообщение боту. Сообщение передается параметре `message`\n'
+                '  `messages` ([демо]({url}/{token}/messages)) -- получает последние 50 сообщений. Если передан параметр `clear`, то удаляет все старые сообщения.\n'
+                '  `cheat_stats` -- изменяет статы игрока. В качестве параметров можно передать следующее:\n'
+                '    `hp`, `mp`, `gold`, `max_hp`, `max_mp`, `damage`, `defence`, `charisma`, `mana_damage` -- значения стат. Они будут прибавлены к текущим статам.\n'
+                '    `zero` -- если указан, то не прибавляет, а устанавливает значение стат в переданные.\n\n'
+                'Все запросы делаются к такому url: `{url}/<token>/<method>`, где `<token>` -- твой токен, а `<method>` -- какой метод нужен.\n\n'
+                'Удачи, ботовод!'
+            ).format(
+                token=str(c_id)+':'+usr.get_bot_token(),
+                url='https://example.com/api'
+            ),
+            parse_mode=telegram.ParseMode.MARKDOWN
+    )
+    usermanager.save_user(usr)
+
+
 @run_async
 def rate(bot, update):
 	c_id = update.message.chat_id
@@ -423,6 +462,7 @@ def main():
 	updater.dispatcher.add_handler(CommandHandler('debug', debug_print))
 	updater.dispatcher.add_handler(CommandHandler('cesar', cesar))
 	updater.dispatcher.add_handler(CommandHandler('start', start))
+	updater.dispatcher.add_handler(CommandHandler('bot', bot))
 	updater.dispatcher.add_handler(CommandHandler('rate', rate))
 	updater.dispatcher.add_handler(CommandHandler('stop', stop))
 	updater.dispatcher.add_handler(CommandHandler('room', room))
