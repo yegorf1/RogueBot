@@ -1,8 +1,11 @@
 import random
 import usermanager
 import items.itemloader as itemloader
+from items.item_info import item_info
 
 from collections import Counter
+
+from constants import REMAINS_STICKER
 
 name = 'Останки'
 
@@ -29,13 +32,13 @@ def enter(user, reply):
 		reply('Здесь лежат останки игрока {0}'.format(found_user.name), photo='BQADAgADFwkAAmrZzgf5q0m1CmsDggI')
 		user.set_room_temp('items', found_user.items)
 	else:
-		reply('Здесь лежат останки лягушки. Воняет. Ты уходишь отсюда побыстрее.')
+		reply('Здесь лежат останки лягушки. Воняет. Ты уходишь отсюда побыстрее.', photo='BQADAgADFwkAAmrZzgf5q0m1CmsDggI')
 		user.leave(reply)
 
 
 def action(user, reply, text):
 	if text == actions[0]:
-		items = [ (it[0], it[1]) for it in user.get_room_temp('items', def_val=[]) if len(it) < 3 or len(it[2]) == 0 ]
+		items = [ i for i in user.get_room_temp('items', def_val=[]) if i.is_simple() ]
 
 		if len(items) == 0:
 			reply('У него ничего не было.')
@@ -44,18 +47,16 @@ def action(user, reply, text):
 
 			user.give_gold(random.randrange(12, 72))
 
-			items.append(('loot', 'tooth'))
-			items.append(('loot', 'tooth'))
+			user.add_item('loot', 'tooth', count=2)
 
 			for it in items:
-				user.add_item(it[0], it[1])
+				user.add_item(it.group, it.name, count=it.count)
 
-			counter_items = Counter(items)
-			items_str = [ ]
-			for it, cnt in counter_items.most_common():
-				loaded_item = itemloader.load_item(it[1], it[0], usr=user)
+			items_str = []
+			for i in items:
+				loaded_item = itemloader.load_item(i.name, i.group, usr=user, count=i.count)
 				if loaded_item is not None:
-					items_str.append('*{0}* ({1} шт.)'.format(loaded_item.name, cnt))
+					items_str.append('*{0}* ({1} шт.)'.format(loaded_item.name, loaded_item.count))
 
 			reply('Его рюкзак вмещал в себя следующие вещи: {0}'.format(', '.join(items_str)))
 

@@ -23,11 +23,15 @@ def get_actions(user):
 	return [ 'Зуб', 'Палка', 'Парашок', 'Уйти' ]
 
 def action(user, reply, text):
+	teeths = user.get_item_by_name('tooth')
+	if teeths is None:
+		user_teeth_cnt = 0
+	else:
+		user_teeth_cnt = teeths.count
 	if text == 'Зуб':
 		teeth_cnt = user.get_room_temp('teeth_cnt', def_val=0)
 
-
-		if user.has_item('tooth'):
+		if user_teeth_cnt >= 1:
 			if teeth_cnt > 2:
 				reply('Ты давно понимаешь, что что-то идет не так, но орк выглядит вполне счастливым, и ты слышишь, как он бормочет что-то вроде: «какая харошая тарговля, босс будит даволен»')
 			else:
@@ -38,22 +42,20 @@ def action(user, reply, text):
 			reply('«Нет зубов — нет товара» — хотел сказать орк, но просто ударил тебя по лицу.')
 			user.make_damage(1, 10, reply, death=False)
 	elif text == 'Палка':
-		if user.items.count(('loot', 'tooth', {})) >= 5:
+		if user_teeth_cnt >= 5:
 			reply('Забирай')
 			user.add_item('good', 'mage_stick')
 
-			for i in range(5):
-				user.remove_item('tooth')
+			user.remove_item('tooth', count=5)
 		else:
 			reply('«Нет зубов — нет товара» — хотел сказать орк, но просто ударил тебя по лицу.')
 			user.make_damage(1, 10, reply, death=False)
 	elif text == 'Парашок':
-		if user.items.count(('loot', 'tooth', {})) >= 5:
+		if user_teeth_cnt >= 5:
 			reply('Забирай')
 			user.add_item('neutral', 'protein')
 
-			for i in range(5):
-				user.remove_item('tooth')
+			user.remove_item('tooth', count=5)
 		else:
 			reply('«Нет зубов — нет товара» — хотел сказать орк, но просто ударил тебя по лицу.')
 			user.make_damage(1, 10, reply, death=False)

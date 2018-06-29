@@ -17,7 +17,7 @@ def get_context():
 	global context
 	return context
 
-def load_item(name, buff, cntxt={}, usr=None):
+def load_item(name, buff, cntxt={}, usr=None, count=1):
 	path = 'items/{0}/{1}.py'.format(buff, name)
 	is_compiled = False
 
@@ -37,7 +37,11 @@ def load_item(name, buff, cntxt={}, usr=None):
 	else:
 		item = imp.load_source(name, path)
 
-	return check_item(item, name, buff) if item is not None else None
+	if item is None:
+		return None
+	item = check_item(item, name, buff)
+	item.count=count
+	return item
 
 def check_item(item, name, buff):
 	item.code_name = name
