@@ -112,13 +112,14 @@ def has_item(self, code_name):
 
 	return False
 
-def add_item(self, buff, name, context={}, count=1):
-	if len(context) != 0:
+def add_item(self, buff, name, context=None, count=1):
+	if context is not None and len(context) != 0:
 		self.items.append(item_info(buff, name, context))
-	for i in self.items:
-		if i.name == name and i.group == buff and i.is_simple():
-			i.count += count
-			break
 	else:
-		self.items.append(item_info(buff, name, context))
+		for i in self.items:
+			if i.name == name and i.group == buff and i.is_simple():
+				i.count += count
+				break
+		else:
+			self.items.append(item_info(buff, name, context))
 
