@@ -35,7 +35,7 @@ def _remove_item_by_name(info, items, name):
 	ind, item = found
 	ind = _remove_item(info[ind], ind)
 	if ind >= 0 and items[ind] and not items[ind].iscursed:
-		del items[ind]
+		del info[ind]
 	return True
 
 def remove_item(self, code_name, count=1):

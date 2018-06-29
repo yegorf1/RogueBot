@@ -1,3 +1,7 @@
+import logging
+logger = logging.getLogger('rg')
+
+
 class item_info(object):
 	def __init__(self, group, name, context=None, count=1):
 		self.group = group
