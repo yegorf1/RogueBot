@@ -33,7 +33,7 @@ def action(user, reply, text):
 		msg = ''
 		if user.has_item('m-16'):
 			user.remove_item('m-16')
-			reply('Твой М-16 теперь не стреляет.. Пишлость выкинуть.')
+			reply('Твой М-16 теперь не стреляет.. Пришлость выкинуть.')
 
 
 		reply(
