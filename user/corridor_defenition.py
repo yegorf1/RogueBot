@@ -7,7 +7,7 @@ from localizations import locale_manager
 
 def open_corridor(self, reply):
 	if self.state == 'room':
-		for item in self.get_items():
+		for item in self.iterate_over_items():
 			item.on_corridor(self, reply)
 
 	self.state = 'corridor'

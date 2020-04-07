@@ -17,17 +17,17 @@ def open_inventory(self, reply):
 	actions = [ ]
 	msg = locale_manager.get('INVENTORY_MESSAGE')
 
-	counter_items = Counter(items)
+	counter_items = self.get_counted_items()
 	selected_items = list(counter_items)
 
 	begin = min(self.inventory_page * INVENTORY_PAGE_SIZE, len(selected_items) - 1)
 	end = min((self.inventory_page + 1) * INVENTORY_PAGE_SIZE, len(selected_items))
 
-	for i in selected_items[begin:end]:
+	for i, cnt in selected_items[begin:end]:
 		if i is not None:
 			acts = [ ]
 			is_atcive = ''#'(Надето: {0} шт.)'.format(active_items.count(i)) if i in active_items else ''
-			msg += '{0} ({2} шт. ценой {4} злт.) {1}:\n{3}\n\n'.format(i.name, is_atcive, counter_items[i], i.description, round(i.price * 0.7))
+			msg += '{0} ({2} шт. ценой {4} злт.) {1}:\n{3}\n\n'.format(i.name, is_atcive, i.count, i.description, round(i.price * 0.7))
 			if i.usable:
 				acts.append(i.name)
 
@@ -56,12 +56,18 @@ def inventory(self, reply, text):
 	elif False and text.startswith(locale_manager.get('ACTIVATE')):
 		name = text[len(locale_manager.get('ACTIVATE')):]
 
-		item = self.get_item_by_name(name)
-
-		items = self.get_items()
 		active_items = self.get_active_items()
-		
-		if item is not None and active_items.count(item) < items.count(item) and (len(active_items) < self.get_active_slots_len()):
+
+		item = self.get_item_by_name(name)
+		active_item = self.get_active_item_by_name(name)
+		if (
+			item is not None
+			and (
+				active_item is None
+				or active_item.count < item.count
+			)
+			and len(active_items) < self.get_active_slots_len()
+		):
 			self.active_items.append((item.buff, item.code_name))
 			reply(locale_manager.get('ACTIVATED'))
 		else:

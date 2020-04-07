@@ -15,9 +15,8 @@ def get_fight_actions(self):
 		locale_manager.get('USE') + locale_manager.get('IMAGINATION')
 	]
 
-	items = self.get_items()
-	counter_items = Counter(items)
-	for i, cnt in counter_items.most_common():
+	counter_items = self.get_counted_items()
+	for i, cnt in counter_items:
 		if i.fightable:
 			act = locale_manager.get('USE') + i.name + ' ({0} шт.)'.format(cnt)
 			if act not in actions:
@@ -64,10 +63,7 @@ def fight_action(self, reply, text):
 			name = text[len(locale_manager.get('USE')):]
 			name = name[:name.rindex('(')-1]
 
-		for i in self.get_items():
-			if i.name == name:
-				item = i
-				break
+		item = self.get_item_by_name(name)
 
 		if item:
 			dmg = 0
@@ -117,7 +113,7 @@ def fight_answer(self, reply):
 		reply(locale_manager.get('USER_DAMAGED').format(dmg))
 
 def escape(self, reply, success=True):
-	for i in self.get_items():
+	for i in self.iterate_over_items():
 		i.on_escape(self, reply, success)
 
 	if success:

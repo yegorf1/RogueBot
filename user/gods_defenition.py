@@ -69,7 +69,7 @@ def prayto(self, reply, god):
 	if god_num >= 0:
 		self.gods_level[god_num] += 1
 
-		for item in self.get_items():
+		for item in self.iterate_over_items():
 			item.on_pray(self, reply, god_num)
 
 

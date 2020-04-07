@@ -20,7 +20,7 @@ def open_shop(self, reply):
 	items =  [ itemloader.load_item(i[1], i[0], usr=self) for i in self.shop_items ]
 	self.shop_names = [ i.name for i in items ]
 
-	for item in self.get_items():
+	for item in self.iterate_over_items():
 		item.on_shop(self, reply, items)
 
 	txt = locale_manager.get('SHOP_MESSAGE').format(
@@ -45,8 +45,7 @@ def buy(self, item, reply):
 
 		check = locale_manager.get('SHOP_CHECK').format(strftime("%Y-%m-%d %H:%M:%S UTC", gmtime()), item.name, item.shop_count, item.price, item.price)
 
-		for i in range(item.shop_count):
-			self.add_item(item.buff, item.code_name)
+		self.add_item(item.buff, item.code_name, count=item.shop_count)
 		item.on_buy(self, reply)
 		reply(check)
 

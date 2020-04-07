@@ -78,7 +78,7 @@ def open_room(self, reply, room_type=None, room_name=None):
 
 	room = roomloader.load_room(self.room[1], self.room[0], self)
 
-	for i in self.get_items():
+	for i in self.iterate_over_items():
 		i.on_room(self, reply, room)
 
 	to_delete = [ ]
@@ -132,7 +132,7 @@ def throw_dice(self, reply, subject=None):
 def get_dice_bonus(self, reply):
 	res = 0
 
-	for i in self.get_items():
+	for i in self.iterate_over_items():
 		res += i.get_dice_bonus(self, reply)
 
 	if self.pet:
