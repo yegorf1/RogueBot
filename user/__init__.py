@@ -77,6 +77,23 @@ class User(object):
 		self.new_mission('main')
 		self.new_mission('tips', 'tips', path_len=30)
 		self.new_mission('caravan', path_len=20)
+		
+		self.bot_token = None
+		self.cheater = False
+
+	def get_bot_token(self):
+		try:
+			return self.bot_token
+		except:
+			self.bot_token = None
+			return None
+
+	def get_cheater(self):
+		try:
+			return self.cheater
+		except:
+			self.cheater = False
+			return False
 
 	def get_session_seed(self):
 		try:
